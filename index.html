@@ -1,10 +1,10 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>Yassine Bennge â€” Portfolio</title>
+  <title>Yassine Bennge — Portfolio</title>
 
   <!-- Google Fonts (explicit requirement) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -193,7 +193,7 @@
 
     /* layout helpers */
     .container{width:min(var(--max), 92vw); margin:0 auto;}
-    section{padding: 86px 0;}
+    section{padding: 80px 0;}
     .sectionTitle{
       font-family:"Syne", system-ui, sans-serif;
       font-weight:800;
@@ -265,6 +265,24 @@
       gap: 16px;
       flex-wrap:wrap;
       justify-content:flex-end;
+    }
+    .navActions{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .menuBtn{
+      display:none;
+      min-width:44px;
+      min-height:44px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      font-size: 22px;
+      font-weight:900;
+      line-height:1;
+      cursor:none;
     }
     .navLinks a{
       text-decoration:none;
@@ -518,6 +536,11 @@
     }
 
     /* skills */
+    #skillsList{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
     .skillRow{
       display:flex;
       align-items:center;
@@ -525,8 +548,21 @@
       gap: 14px;
       margin-bottom: 12px;
     }
-    .skillName{font-weight:800; color: rgba(255,255,255,.88)}
-    .skillPct{font-weight:800; color: var(--muted2); font-size: 13px;}
+    .skillName{
+      font-weight:800;
+      color: rgba(255,255,255,.88);
+      min-width:0;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .skillPct{
+      flex:0 0 auto;
+      font-weight:800;
+      color: var(--muted2);
+      font-size: 13px;
+      white-space:nowrap;
+    }
     .barWrap{
       height: 12px;
       border-radius: 999px;
@@ -568,9 +604,13 @@
       flex-wrap:wrap;
       gap: 10px;
       margin-top: 18px;
+      max-height: 152px;
+      overflow:hidden;
     }
+    .chips.expanded{max-height:none;}
     .chip{
       padding: 9px 12px;
+      min-height: 36px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.05);
@@ -580,6 +620,19 @@
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
       user-select:none;
     }
+    .chipToggle{
+      display:none;
+      margin-top: 12px;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.9);
+      font-weight: 900;
+      cursor:none;
+    }
+    .chipToggle.visible{display:inline-flex; align-items:center; justify-content:center;}
     .chip:hover{
       transform: translateY(-4px);
       box-shadow: 0 18px 40px rgba(0,0,0,.28);
@@ -821,22 +874,68 @@
     .reveal.left.in, .reveal.right.in{transform: translateX(0); }
 
     /* responsive */
-    @media (max-width: 980px){
-      .heroGrid{grid-template-columns: 1fr; gap: 26px;}
-      .portraitWrap{margin: 0 auto;}
-      .projGrid{grid-template-columns: 1fr 1fr;}
+    @media (max-width: 1199px){
+      .container{width:min(var(--max), 94vw);}
+      .projGrid{grid-template-columns: repeat(2, minmax(0, 1fr));}
+    }
+    @media (max-width: 1023px){
+      .heroGrid{gap: 30px;}
       .contactGrid{grid-template-columns: 1fr;}
-      .infoCards{grid-template-columns: 1fr;}
+      .infoCards{grid-template-columns: 1fr 1fr;}
       .eduGrid{grid-template-columns: 1fr;}
     }
-    @media (max-width: 640px){
-      nav{top: 10px;}
-      header.hero{padding-top: 108px;}
-      .projGrid{grid-template-columns: 1fr;}
-      section{padding: 74px 0;}
-      .stats{grid-template-columns: 1fr; }
-      .navLinks{gap: 8px;}
-      .navLinks a{padding: 9px 8px;}
+    @media (max-width: 767px){
+      nav{top: 10px; width:min(var(--max), 94vw);}
+      .navRow{align-items:center;}
+      .menuBtn{display:grid; place-items:center;}
+      .navLinks{
+        position:absolute;
+        left:0;
+        right:0;
+        top:calc(100% + 8px);
+        display:grid;
+        grid-template-columns:1fr;
+        gap: 6px;
+        padding: 10px;
+        border-radius: 16px;
+        background: rgba(12,14,34,.94);
+        border: 1px solid rgba(255,255,255,.10);
+        box-shadow: 0 20px 70px rgba(0,0,0,.35);
+        transform: translateY(-8px);
+        opacity:0;
+        visibility:hidden;
+        pointer-events:none;
+      }
+      .navLinks.open{
+        transform: translateY(0);
+        opacity:1;
+        visibility:visible;
+        pointer-events:auto;
+      }
+      .navLinks a{min-height:44px; display:flex; align-items:center; padding: 11px 12px;}
+      header.hero{padding-top: 112px;}
+      .heroGrid{grid-template-columns: 1fr; gap: 28px;}
+      .heroName{font-size: clamp(2rem, 6vw, 5rem);}
+      .portraitWrap{margin: 0 auto; width:min(330px, 86vw);}
+      .ctaRow{display:grid; grid-template-columns:1fr;}
+      .btn{width:100%; justify-content:center; min-height:44px;}
+      #skillsList{grid-template-columns:1fr;}
+      .grid2{grid-template-columns:1fr;}
+      .timeline{padding-left: 16px;}
+      .job{width:100%; margin-left:0;}
+      .job:hover{transform: translateY(-2px);}
+      .infoCards, .contactGrid, .eduGrid{grid-template-columns:1fr;}
+      .chip, .pill, .badge, .langBtn{min-height:44px; display:inline-flex; align-items:center;}
+    }
+    @media (max-width: 600px){
+      .projGrid{grid-template-columns:1fr;}
+    }
+    @media (max-width: 479px){
+      .container{width:min(100% - 28px, var(--max));}
+      section{padding: 64px 0;}
+      .stats{grid-template-columns: 1fr;}
+      .info{min-width:0;}
+      .sectionTitle{font-size: clamp(22px, 7vw, 30px);}
     }
   </style>
 </head>
@@ -860,16 +959,19 @@
         <div class="logoMark">YB</div>
         <div data-i18n="brand.name">Yassine Bennge</div>
       </div>
-      <div class="navLinks">
+      <div class="navLinks" id="navLinks">
         <a href="#skills" data-i18n="nav.skills"></a>
         <a href="#experience" data-i18n="nav.experience"></a>
         <a href="#projects" data-i18n="nav.projects"></a>
         <a href="#education" data-i18n="nav.education"></a>
         <a href="#contact" data-i18n="nav.contact"></a>
+      </div>
+      <div class="navActions">
         <div class="langToggle" role="group" aria-label="Language switcher">
           <button class="langBtn" id="langFR" type="button">FR</button>
           <button class="langBtn" id="langEN" type="button">EN</button>
         </div>
+        <button class="menuBtn" id="menuBtn" type="button" aria-controls="navLinks" aria-expanded="false">&#9776;</button>
       </div>
     </div>
   </nav>
@@ -886,8 +988,8 @@
           <div class="heroTitle reveal left" data-i18n="brand.title"></div>
           <p class="heroSummary reveal left" data-i18n="hero.summary"></p>
           <div class="ctaRow reveal left">
-            <a class="btn primary" href="#projects"><span>â†³</span><span data-i18n="hero.ctaWork"></span></a>
-            <a class="btn" href="#contact"><span>âœ‰</span><span data-i18n="hero.ctaContact"></span></a>
+            <a class="btn primary" href="#projects"><span>↳</span><span data-i18n="hero.ctaWork"></span></a>
+            <a class="btn" href="#contact"><span>✉</span><span data-i18n="hero.ctaContact"></span></a>
           </div>
         </div>
 
@@ -921,6 +1023,7 @@
               <div class="marqueeTrack" id="marqueeTrack"></div>
             </div>
             <div class="chips" id="techChips" aria-label="Tech chips"></div>
+            <button class="chipToggle" id="chipToggle" type="button" aria-expanded="false"></button>
           </div>
         </div>
       </div>
@@ -983,51 +1086,51 @@
       fr: {
         brand: {
           name: "Yassine Bennge",
-          title: "Ã‰tudiant en Master Recherche â€” Informatique | DÃ©veloppement Web & IA"
+          title: "Étudiant en Master Recherche — Informatique | Développement Web & IA"
         },
-        loader: { hint: "PrÃ©paration du portfolioâ€¦" },
+        loader: { hint: "Préparation du portfolio…" },
         nav: {
-          skills: "CompÃ©tences",
-          experience: "ExpÃ©rience",
+          skills: "Compétences",
+          experience: "Expérience",
           projects: "Projets",
           education: "Formation",
           contact: "Contact"
         },
         hero: {
-          availability: "Ouvert Ã  une opportunitÃ© (stages / projets)",
+          availability: "Ouvert à une opportunité (stages / projets)",
           summary:
-            "Ã‰tudiant en Master Recherche en Informatique Ã  la FacultÃ© des Sciences de Sfax, spÃ©cialisÃ© en Big Data, Intelligence Artificielle, Machine Learning et Vision par Ordinateur. DÃ©veloppeur Full-Stack maÃ®trisant la stack MERN (MongoDB, Express.js, React, Node.js), avec une solide expÃ©rience en conception d'applications web et en dÃ©veloppement de systÃ¨mes d'apprentissage automatique. CrÃ©atif, rigoureux et passionnÃ© par la technologie, je recherche une opportunitÃ© pour mettre mes compÃ©tences au service de projets innovants Ã  fort impact.",
+            "Étudiant en Master Recherche en Informatique à la Faculté des Sciences de Sfax, spécialisé en Big Data, Intelligence Artificielle, Machine Learning et Vision par Ordinateur. Développeur Full-Stack maîtrisant la stack MERN (MongoDB, Express.js, React, Node.js), avec une solide expérience en conception d'applications web et en développement de systèmes d'apprentissage automatique. Créatif, rigoureux et passionné par la technologie, je recherche une opportunité pour mettre mes compétences au service de projets innovants à fort impact.",
           ctaWork: "Voir mes projets",
           ctaContact: "Me contacter",
           stats: {
-            s1l: "ExpÃ©riences pro",
+            s1l: "Expériences pro",
             s2l: "Projets",
             s3l: "Technologies"
           }
         },
         skills: {
-          title: "CompÃ©tences techniques",
-          sub: "Barres animÃ©es (au scroll) + nuage de technologies extrait du CV."
+          title: "Compétences techniques",
+          sub: "Barres animées (au scroll) + nuage de technologies extrait du CV."
         },
         exp: {
-          title: "ExpÃ©riences professionnelles",
-          sub: "Timeline verticale avec entrÃ©e animÃ©e au scroll."
+          title: "Expériences professionnelles",
+          sub: "Timeline verticale avec entrée animée au scroll."
         },
         projects: {
           title: "Projets personnels",
-          sub: "Grille responsive en 3 colonnes avec survol animÃ©."
+          sub: "Grille responsive en 3 colonnes avec survol animé."
         },
         edu: {
           title: "Formation",
-          sub: "Parcours acadÃ©mique + axes d'Ã©tude."
+          sub: "Parcours académique + axes d'étude."
         },
         langs: { title: "Langues" },
         contact: {
           title: "Contact",
-          sub: "Cartes d'infos + ripples animÃ©s en continu."
+          sub: "Cartes d'infos + ripples animés en continu."
         },
         footer: {
-          text: "Â© 2026 â€” Yassine Bennge. Portfolio mono-page (HTML/CSS/JS) basÃ© sur le CV fourni."
+          text: "© 2026 — Yassine Bennge. Portfolio mono-page (HTML/CSS/JS) basé sur le CV fourni."
         },
         labels: {
           dates: "Dates",
@@ -1039,9 +1142,9 @@
       en: {
         brand: {
           name: "Yassine Bennge",
-          title: "Research Masterâ€™s Student â€” Computer Science | Web Development & AI"
+          title: "Research Master’s Student — Computer Science | Web Development & AI"
         },
-        loader: { hint: "Preparing the portfolioâ€¦" },
+        loader: { hint: "Preparing the portfolio…" },
         nav: {
           skills: "Skills",
           experience: "Experience",
@@ -1052,7 +1155,7 @@
         hero: {
           availability: "Open to an opportunity (internships / projects)",
           summary:
-            "Research Masterâ€™s student in Computer Science at the Faculty of Sciences of Sfax, specializing in Big Data, Artificial Intelligence, Machine Learning, and Computer Vision. Fullâ€‘Stack developer mastering the MERN stack (MongoDB, Express.js, React, Node.js), with solid experience designing web applications and developing machineâ€‘learning systems. Creative, rigorous, and passionate about technology, Iâ€™m looking for an opportunity to contribute my skills to innovative, highâ€‘impact projects.",
+            "Research Master’s student in Computer Science at the Faculty of Sciences of Sfax, specializing in Big Data, Artificial Intelligence, Machine Learning, and Computer Vision. Full‑Stack developer mastering the MERN stack (MongoDB, Express.js, React, Node.js), with solid experience designing web applications and developing machine‑learning systems. Creative, rigorous, and passionate about technology, I’m looking for an opportunity to contribute my skills to innovative, high‑impact projects.",
           ctaWork: "View work",
           ctaContact: "Contact me",
           stats: {
@@ -1083,7 +1186,7 @@
           sub: "Info cards + continuously animated ripple rings."
         },
         footer: {
-          text: "Â© 2026 â€” Yassine Bennge. Single-page portfolio (HTML/CSS/JS) generated from the provided resume."
+          text: "© 2026 — Yassine Bennge. Single-page portfolio (HTML/CSS/JS) generated from the provided resume."
         },
         labels: {
           dates: "Dates",
@@ -1104,7 +1207,7 @@
         portfolio: "votre-lien-ici.com"
       },
       skills: [
-        // Derived proficiency: skills highlighted as core / "maÃ®trisant" are higher.
+        // Derived proficiency: skills highlighted as core / "maîtrisant" are higher.
         { key: "React.js", pct: 88, group: "Web" },
         { key: "Node.js", pct: 86, group: "Web" },
         { key: "Express.js", pct: 84, group: "Web" },
@@ -1130,8 +1233,8 @@
         { key: "Architecture MVC", pct: 70, group: "Conception" },
         { key: "Photoshop", pct: 68, group: "Design" },
         { key: "Illustrator", pct: 62, group: "Design" },
-        { key: "Premiere Pro", pct: 80, group: "VidÃ©o" },
-        { key: "After Effects", pct: 72, group: "VidÃ©o" }
+        { key: "Premiere Pro", pct: 80, group: "Vidéo" },
+        { key: "After Effects", pct: 72, group: "Vidéo" }
       ],
       technologies: [
         "C","Java","JavaScript","PHP","Python",
@@ -1147,17 +1250,17 @@
       ],
       experiences: [
         {
-          title: { fr: "DÃ©veloppeur Web â€” Stage de fin d'Ã©tudes", en: "Web Developer â€” Final-year Internship" },
+          title: { fr: "Développeur Web — Stage de fin d'études", en: "Web Developer — Final-year Internship" },
           company: "Vaga Alarme",
-          dates: { fr: "Avr 2022 â€“ Sep 2022", en: "Apr 2022 â€“ Sep 2022" },
+          dates: { fr: "Avr 2022 – Sep 2022", en: "Apr 2022 – Sep 2022" },
           location: { fr: "Rades, Tunisie", en: "Rades, Tunisia" },
           bullets: {
             fr: [
-              "ConÃ§u et dÃ©veloppÃ© une application ERP complÃ¨te avec la stack MERN (MongoDB, Express.js, React, Node.js) pour centraliser la gestion des stocks, la CRM et les finances.",
-              "RÃ©duit le temps de traitement des opÃ©rations internes de ~40 % grÃ¢ce Ã  l'automatisation des flux de travail.",
-              "Mis en place une API RESTful sÃ©curisÃ©e avec authentification JWT, gÃ©rant plus de 15 modules mÃ©tiers.",
-              "CollaborÃ© Ã©troitement avec l'Ã©quipe mÃ©tier pour recueillir les exigences et livrer des itÃ©rations fonctionnelles chaque sprint.",
-              "RÃ©digÃ© la documentation technique complÃ¨te (UML, schÃ©mas de base de donnÃ©es, guide d'utilisation)."
+              "Conçu et développé une application ERP complète avec la stack MERN (MongoDB, Express.js, React, Node.js) pour centraliser la gestion des stocks, la CRM et les finances.",
+              "Réduit le temps de traitement des opérations internes de ~40 % grâce à l'automatisation des flux de travail.",
+              "Mis en place une API RESTful sécurisée avec authentification JWT, gérant plus de 15 modules métiers.",
+              "Collaboré étroitement avec l'équipe métier pour recueillir les exigences et livrer des itérations fonctionnelles chaque sprint.",
+              "Rédigé la documentation technique complète (UML, schémas de base de données, guide d'utilisation)."
             ],
             en: [
               "Designed and developed a full ERP application with the MERN stack (MongoDB, Express.js, React, Node.js) to centralize inventory, CRM, and finance management.",
@@ -1170,16 +1273,16 @@
           tags: ["MERN","ERP","API REST","JWT","UML"]
         },
         {
-          title: { fr: "Monteur VidÃ©o â€” Temps plein", en: "Video Editor â€” Full time" },
+          title: { fr: "Monteur Vidéo — Temps plein", en: "Video Editor — Full time" },
           company: "Original Gamers",
-          dates: { fr: "Sep 2023 â€“ DÃ©c 2023", en: "Sep 2023 â€“ Dec 2023" },
+          dates: { fr: "Sep 2023 – Déc 2023", en: "Sep 2023 – Dec 2023" },
           location: { fr: "Sousse, Tunisie", en: "Sousse, Tunisia" },
           bullets: {
             fr: [
-              "Produit et montÃ© plus de 80 vidÃ©os pour YouTube et TikTok, accumulant collectivement plusieurs millions de vues.",
-              "MaÃ®trisÃ© l'utilisation avancÃ©e de Premiere Pro et After Effects pour la crÃ©ation d'effets visuels, transitions et graphiques animÃ©s.",
-              "OptimisÃ© les dÃ©lais de rendu et les workflows de production, rÃ©duisant le temps de livraison de 30 %.",
-              "AnalysÃ© les mÃ©triques d'engagement des audiences pour ajuster le style Ã©ditorial et maximiser la rÃ©tention des spectateurs."
+              "Produit et monté plus de 80 vidéos pour YouTube et TikTok, accumulant collectivement plusieurs millions de vues.",
+              "Maîtrisé l'utilisation avancée de Premiere Pro et After Effects pour la création d'effets visuels, transitions et graphiques animés.",
+              "Optimisé les délais de rendu et les workflows de production, réduisant le temps de livraison de 30 %.",
+              "Analysé les métriques d'engagement des audiences pour ajuster le style éditorial et maximiser la rétention des spectateurs."
             ],
             en: [
               "Produced and edited 80+ videos for YouTube and TikTok, totaling several million views.",
@@ -1193,8 +1296,8 @@
       ],
       education: [
         {
-          title: { fr: "Master Recherche en Informatique (En cours)", en: "Research Masterâ€™s in Computer Science (In progress)" },
-          school: { fr: "FacultÃ© des Sciences de Sfax", en: "Faculty of Sciences of Sfax" },
+          title: { fr: "Master Recherche en Informatique (En cours)", en: "Research Master’s in Computer Science (In progress)" },
+          school: { fr: "Faculté des Sciences de Sfax", en: "Faculty of Sciences of Sfax" },
           dates: { fr: "En cours", en: "In progress" },
           details: {
             fr: ["Big Data", "Intelligence Artificielle", "Machine Learning", "Deep Learning", "Vision par Ordinateur"],
@@ -1202,60 +1305,60 @@
           }
         },
         {
-          title: { fr: "Licence (DiplÃ´me) en Informatique", en: "Bachelorâ€™s Degree in Computer Science" },
-          school: { fr: "Institut SupÃ©rieur d'Informatique de Mahdia", en: "Higher Institute of Computer Science of Mahdia" },
+          title: { fr: "Licence (Diplôme) en Informatique", en: "Bachelor’s Degree in Computer Science" },
+          school: { fr: "Institut Supérieur d'Informatique de Mahdia", en: "Higher Institute of Computer Science of Mahdia" },
           dates: { fr: "2022", en: "2022" },
           details: {
-            fr: ["Algorithmique", "DÃ©veloppement Logiciel", "Bases de DonnÃ©es", "DÃ©veloppement Web/Mobile", "Conception Graphique"],
+            fr: ["Algorithmique", "Développement Logiciel", "Bases de Données", "Développement Web/Mobile", "Conception Graphique"],
             en: ["Algorithms", "Software Development", "Databases", "Web/Mobile Development", "Graphic Design"]
           }
         },
         {
-          title: { fr: "BaccalaurÃ©at â€” Informatique", en: "High School Diploma â€” Computer Science" },
-          school: { fr: "LycÃ©e de Korba", en: "Korba High School" },
+          title: { fr: "Baccalauréat — Informatique", en: "High School Diploma — Computer Science" },
+          school: { fr: "Lycée de Korba", en: "Korba High School" },
           dates: { fr: "2018", en: "2018" },
           details: {
-            fr: ["Algorithmique", "Bases de DonnÃ©es", "DÃ©veloppement Web"],
+            fr: ["Algorithmique", "Bases de Données", "Développement Web"],
             en: ["Algorithms", "Databases", "Web Development"]
           }
         }
       ],
       projects: [
         {
-          emoji: "ðŸ“š",
-          name: { fr: "SystÃ¨me de Recommandation de Livres", en: "Book Recommendation System" },
+          emoji: "📚",
+          name: { fr: "Système de Recommandation de Livres", en: "Book Recommendation System" },
           dates: { fr: "Avr 2024", en: "Apr 2024" },
           desc: {
-            fr: "Moteur de recommandation personnalisÃ©e (filtrage collaboratif + contenu) pour suggÃ©rer des livres selon l'historique de lecture. Score topâ€‘10 de 87 % sur Bookâ€‘Crossing. EDA, nettoyage et visualisation avec Pandas & Matplotlib.",
-            en: "Personalized recommendation engine (collaborative + content-based filtering) suggesting books from reading history. Achieved 87% topâ€‘10 precision on the Bookâ€‘Crossing dataset. Full EDA, cleaning, and visualization with Pandas & Matplotlib."
+            fr: "Moteur de recommandation personnalisée (filtrage collaboratif + contenu) pour suggérer des livres selon l'historique de lecture. Score top‑10 de 87 % sur Book‑Crossing. EDA, nettoyage et visualisation avec Pandas & Matplotlib.",
+            en: "Personalized recommendation engine (collaborative + content-based filtering) suggesting books from reading history. Achieved 87% top‑10 precision on the Book‑Crossing dataset. Full EDA, cleaning, and visualization with Pandas & Matplotlib."
           },
           tags: ["Python","Scikit-learn","Pandas","NumPy","Matplotlib","Machine Learning"]
         },
         {
-          emoji: "ðŸ§©",
-          name: { fr: "Application ERP Web â€” Stack MERN", en: "Web ERP Application â€” MERN Stack" },
-          dates: { fr: "Avr â€“ Sep 2022", en: "Apr â€“ Sep 2022" },
+          emoji: "🧩",
+          name: { fr: "Application ERP Web — Stack MERN", en: "Web ERP Application — MERN Stack" },
+          dates: { fr: "Avr – Sep 2022", en: "Apr – Sep 2022" },
           desc: {
-            fr: "Application ERP fullâ€‘stack gÃ©rant inventaire, CRM et modules financiers. Interface React.js responsive avec tableau de bord analytique temps rÃ©el, rÃ´les utilisateurs. Base MongoDB optimisÃ©e (indexation). API sÃ©curisÃ©e JWT.",
-            en: "Fullâ€‘stack ERP managing inventory, CRM, and finance modules. Responsive React.js UI with realâ€‘time analytics dashboard and user roles. Optimized MongoDB (indexing). Secure JWT-based API."
+            fr: "Application ERP full‑stack gérant inventaire, CRM et modules financiers. Interface React.js responsive avec tableau de bord analytique temps réel, rôles utilisateurs. Base MongoDB optimisée (indexation). API sécurisée JWT.",
+            en: "Full‑stack ERP managing inventory, CRM, and finance modules. Responsive React.js UI with real‑time analytics dashboard and user roles. Optimized MongoDB (indexing). Secure JWT-based API."
           },
           tags: ["React.js","Node.js","Express.js","MongoDB","JWT","API REST","ERP","CRM"]
         }
       ],
       certifications: [
-        { fr: "Introduction Ã  MongoDB â€” MongoDB University (2023)", en: "Introduction to MongoDB â€” MongoDB University (2023)" },
-        { fr: "Soft Skills & Communication Professionnelle â€” ANETI (2023)", en: "Soft Skills & Professional Communication â€” ANETI (2023)" }
+        { fr: "Introduction à MongoDB — MongoDB University (2023)", en: "Introduction to MongoDB — MongoDB University (2023)" },
+        { fr: "Soft Skills & Communication Professionnelle — ANETI (2023)", en: "Soft Skills & Professional Communication — ANETI (2023)" }
       ],
       languages: [
         { name: { fr:"Arabe", en:"Arabic" }, level: { fr:"Natif", en:"Native" } },
-        { name: { fr:"FranÃ§ais", en:"French" }, level: { fr:"Courant", en:"Fluent" } },
+        { name: { fr:"Français", en:"French" }, level: { fr:"Courant", en:"Fluent" } },
         { name: { fr:"Anglais", en:"English" }, level: { fr:"Professionnel", en:"Professional" } }
       ],
       softSkills: [
         { fr:"Leadership", en:"Leadership" },
-        { fr:"RÃ©solution de problÃ¨mes", en:"Problem solving" },
+        { fr:"Résolution de problèmes", en:"Problem solving" },
         { fr:"Communication", en:"Communication" },
-        { fr:"AdaptabilitÃ©", en:"Adaptability" },
+        { fr:"Adaptabilité", en:"Adaptability" },
         { fr:"Rigueur", en:"Rigor" },
         { fr:"Prise de parole en public", en:"Public speaking" }
       ]
@@ -1264,41 +1367,82 @@
     const DEFAULT_LANG = "fr";
     const LS_KEY = "portfolio_lang";
 
+    const dynamicI18n = {
+      fr: {
+        chips: { showMore: "Voir plus", showLess: "Voir moins" },
+        contactCards: { email: "Email", phone: "T\u00e9l\u00e9phone", location: "Localisation", availability: "Disponibilit\u00e9" }
+      },
+      en: {
+        chips: { showMore: "Show more", showLess: "Show less" },
+        contactCards: { email: "Email", phone: "Phone", location: "Location", availability: "Availability" }
+      }
+    };
+    const ANIMATION_CLASSES = ["in", "revealed", "animated", "visible", "in-view", "is-filled"];
+    let currentLang = DEFAULT_LANG;
+    let dynamicSectionsBuilt = false;
+
     function getByPath(obj, path){
       return path.split(".").reduce((o,k)=> (o && k in o ? o[k] : undefined), obj);
     }
 
+    function resolveI18nValue(key, lang, el){
+      let value = getByPath(i18n[lang], key);
+      if (value === undefined) value = getByPath(dynamicI18n[lang], key);
+      if (value === undefined && key.startsWith("resume.")) value = getByPath(resumeData, key.slice(7));
+      if (value && typeof value === "object" && !Array.isArray(value) && lang in value) value = value[lang];
+      if (Array.isArray(value) && el && el.hasAttribute("data-i18n-index")) {
+        value = value[Number(el.getAttribute("data-i18n-index"))];
+      }
+      return value;
+    }
+
+    function applyTextTranslations(lang){
+      document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const key = el.getAttribute("data-i18n");
+        const value = resolveI18nValue(key, lang, el);
+        if (typeof value === "string" || typeof value === "number") el.textContent = value;
+      });
+    }
+
+    function captureAnimationState(){
+      return Array.from(document.querySelectorAll("[class]")).map(el=>{
+        const classes = ANIMATION_CLASSES.filter(cls=>el.classList.contains(cls));
+        return classes.length ? [el, classes] : null;
+      }).filter(Boolean);
+    }
+
+    function restoreAnimationState(state){
+      state.forEach(([el, classes])=>{
+        if (document.documentElement.contains(el)) el.classList.add(...classes);
+      });
+    }
+
     function applyLang(lang){
+      currentLang = lang;
+      const animationState = captureAnimationState();
       document.documentElement.lang = lang;
       document.getElementById("langFR").classList.toggle("active", lang === "fr");
       document.getElementById("langEN").classList.toggle("active", lang === "en");
 
-      // set text
-      document.querySelectorAll("[data-i18n]").forEach(el=>{
-        const key = el.getAttribute("data-i18n");
-        const value = getByPath(i18n[lang], key);
-        if (typeof value === "string") el.textContent = value;
-      });
+      applyTextTranslations(lang);
+      updateStats(lang);
+      updateChipToggleText();
+      restoreAnimationState(animationState);
 
-      // stats
+      localStorage.setItem(LS_KEY, lang);
+    }
+
+    function updateStats(lang){
       const stats = computeStats(lang);
       document.getElementById("stat1v").textContent = stats.s1v;
       document.getElementById("stat2v").textContent = stats.s2v;
       document.getElementById("stat3v").textContent = stats.s3v;
+      document.getElementById("stat1l").setAttribute("data-i18n", "hero.stats.s1l");
+      document.getElementById("stat2l").setAttribute("data-i18n", "hero.stats.s2l");
+      document.getElementById("stat3l").setAttribute("data-i18n", "hero.stats.s3l");
       document.getElementById("stat1l").textContent = i18n[lang].hero.stats.s1l;
       document.getElementById("stat2l").textContent = i18n[lang].hero.stats.s2l;
       document.getElementById("stat3l").textContent = i18n[lang].hero.stats.s3l;
-
-      // render blocks dependent on language
-      renderSkills(lang);
-      renderExperience(lang);
-      renderProjects(lang);
-      renderEducation(lang);
-      renderLanguages(lang);
-      renderContact(lang);
-      renderMarquee(lang);
-
-      localStorage.setItem(LS_KEY, lang);
     }
 
     function computeStats(lang){
@@ -1312,159 +1456,231 @@
       };
     }
 
-    function escapeHtml(s){
-      return String(s)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+    function makeEl(tag, className, key){
+      const el = document.createElement(tag);
+      if (className) el.className = className;
+      if (key) el.setAttribute("data-i18n", key);
+      return el;
     }
 
-    function renderSkills(lang){
+    function buildDynamicSections(){
+      if (dynamicSectionsBuilt) return;
+      buildSkills();
+      buildExperience();
+      buildProjects();
+      buildEducation();
+      buildLanguages();
+      buildContact();
+      buildMarquee();
+      dynamicSectionsBuilt = true;
+    }
+
+    function buildSkills(){
       const root = document.getElementById("skillsList");
-      root.innerHTML = "";
       resumeData.skills.forEach(s=>{
         const row = document.createElement("div");
         row.className = "skill";
-        row.innerHTML = `
-          <div class="skillRow">
-            <div class="skillName">${escapeHtml(s.key)}</div>
-            <div class="skillPct">${s.pct}%</div>
-          </div>
-          <div class="barWrap" aria-label="${escapeHtml(s.key)}">
-            <div class="barFill" data-pct="${s.pct}"></div>
-          </div>
-        `;
+
+        const skillRow = document.createElement("div");
+        skillRow.className = "skillRow";
+        const name = document.createElement("div");
+        name.className = "skillName";
+        name.textContent = s.key;
+        const pct = document.createElement("div");
+        pct.className = "skillPct";
+        pct.textContent = s.pct + "%";
+        skillRow.append(name, pct);
+
+        const barWrap = document.createElement("div");
+        barWrap.className = "barWrap";
+        barWrap.setAttribute("aria-label", s.key);
+        const barFill = document.createElement("div");
+        barFill.className = "barFill";
+        barFill.setAttribute("data-pct", s.pct);
+        barWrap.appendChild(barFill);
+
+        row.append(skillRow, barWrap);
         root.appendChild(row);
       });
 
       const chips = document.getElementById("techChips");
-      chips.innerHTML = "";
-      [...new Set(resumeData.technologies)].forEach(t=>{
+      const technologies = [...new Set(resumeData.technologies)];
+      technologies.forEach(t=>{
         const c = document.createElement("span");
         c.className = "chip";
         c.textContent = t;
         chips.appendChild(c);
       });
+      const toggle = document.getElementById("chipToggle");
+      if (technologies.length > 16) {
+        toggle.classList.add("visible");
+        toggle.addEventListener("click", ()=>{
+          const expanded = chips.classList.toggle("expanded");
+          toggle.setAttribute("aria-expanded", String(expanded));
+          updateChipToggleText();
+        });
+      }
     }
 
-    function renderExperience(lang){
+    function updateChipToggleText(){
+      const chips = document.getElementById("techChips");
+      const toggle = document.getElementById("chipToggle");
+      if (!chips || !toggle) return;
+      const key = chips.classList.contains("expanded") ? "chips.showLess" : "chips.showMore";
+      toggle.textContent = resolveI18nValue(key, currentLang) || "";
+    }
+
+    function buildExperience(){
       const root = document.getElementById("expList");
-      root.innerHTML = "";
-      resumeData.experiences.forEach(job=>{
+      resumeData.experiences.forEach((job, i)=>{
         const div = document.createElement("article");
         div.className = "job reveal";
-        const bullets = job.bullets[lang].map(b=>`<li>${escapeHtml(b)}</li>`).join("");
-        const tags = job.tags.map(t=>`<span class="badge">${escapeHtml(t)}</span>`).join("");
-        div.innerHTML = `
-          <div class="jobTop">
-            <div>
-              <div class="jobTitle">${escapeHtml(job.title[lang])}</div>
-              <div class="jobPlace">${escapeHtml(job.company)} Â· ${escapeHtml(job.location[lang])}</div>
-            </div>
-            <div class="jobMeta">${escapeHtml(job.dates[lang])}</div>
-          </div>
-          <ul class="bullets">${bullets}</ul>
-          <div class="badges">${tags}</div>
-        `;
+
+        const top = document.createElement("div");
+        top.className = "jobTop";
+        const main = document.createElement("div");
+        const title = makeEl("div", "jobTitle", `resume.experiences.${i}.title`);
+        const place = document.createElement("div");
+        place.className = "jobPlace";
+        const company = document.createElement("span");
+        company.textContent = job.company;
+        const sep = document.createTextNode(" \u00b7 ");
+        const location = makeEl("span", "", `resume.experiences.${i}.location`);
+        place.append(company, sep, location);
+        main.append(title, place);
+        const dates = makeEl("div", "jobMeta", `resume.experiences.${i}.dates`);
+        top.append(main, dates);
+
+        const bullets = document.createElement("ul");
+        bullets.className = "bullets";
+        job.bullets.fr.forEach((_, j)=>{
+          const li = makeEl("li", "", `resume.experiences.${i}.bullets`);
+          li.setAttribute("data-i18n-index", j);
+          bullets.appendChild(li);
+        });
+
+        const badges = document.createElement("div");
+        badges.className = "badges";
+        job.tags.forEach(t=>{
+          const tag = document.createElement("span");
+          tag.className = "badge";
+          tag.textContent = t;
+          badges.appendChild(tag);
+        });
+        div.append(top, bullets, badges);
         root.appendChild(div);
       });
     }
 
     function projectEmojiFor(nameFr){
       const s = (nameFr || "").toLowerCase();
-      if (s.includes("recommandation") || s.includes("livres")) return "ðŸ“š";
-      if (s.includes("erp")) return "ðŸ§©";
-      return "âœ¨";
+      if (s.includes("recommandation") || s.includes("livres")) return "\u{1F4DA}";
+      if (s.includes("erp")) return "\u{1F9E9}";
+      return "\u2728";
     }
 
-    function renderProjects(lang){
+    function buildProjects(){
       const root = document.getElementById("projList");
-      root.innerHTML = "";
-      resumeData.projects.forEach(p=>{
+      resumeData.projects.forEach((p, i)=>{
         const card = document.createElement("article");
         card.className = "proj reveal";
-        const tags = p.tags.map(t=>`<span class="badge">${escapeHtml(t)}</span>`).join("");
-        const emoji = p.emoji || projectEmojiFor(p.name.fr);
-        card.innerHTML = `
-          <div class="projEmoji" aria-hidden="true">${emoji}</div>
-          <div class="projName">${escapeHtml(p.name[lang])}</div>
-          <p class="projDesc">${escapeHtml(p.desc[lang])}</p>
-          <div class="badges" style="margin-top:14px">${tags}</div>
-        `;
+        const emoji = document.createElement("div");
+        emoji.className = "projEmoji";
+        emoji.setAttribute("aria-hidden", "true");
+        emoji.textContent = p.emoji || projectEmojiFor(p.name.fr);
+        const name = makeEl("div", "projName", `resume.projects.${i}.name`);
+        const desc = makeEl("p", "projDesc", `resume.projects.${i}.desc`);
+        const badges = document.createElement("div");
+        badges.className = "badges";
+        badges.style.marginTop = "14px";
+        p.tags.forEach(t=>{
+          const tag = document.createElement("span");
+          tag.className = "badge";
+          tag.textContent = t;
+          badges.appendChild(tag);
+        });
+        card.append(emoji, name, desc, badges);
         root.appendChild(card);
       });
     }
 
-    function renderEducation(lang){
+    function buildEducation(){
       const root = document.getElementById("eduList");
-      root.innerHTML = "";
-      resumeData.education.forEach(e=>{
+      resumeData.education.forEach((e, i)=>{
         const div = document.createElement("div");
         div.className = "card reveal";
-        div.innerHTML = `
-          <div class="eduTitle">${escapeHtml(e.title[lang])}</div>
-          <div class="eduMeta">${escapeHtml(e.school[lang])} Â· ${escapeHtml(e.dates[lang])}</div>
-          <ul class="eduList">${e.details[lang].map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul>
-        `;
+        const title = makeEl("div", "eduTitle", `resume.education.${i}.title`);
+        const meta = document.createElement("div");
+        meta.className = "eduMeta";
+        const school = makeEl("span", "", `resume.education.${i}.school`);
+        const sep = document.createTextNode(" \u00b7 ");
+        const dates = makeEl("span", "", `resume.education.${i}.dates`);
+        meta.append(school, sep, dates);
+        const details = document.createElement("ul");
+        details.className = "eduList";
+        e.details.fr.forEach((_, j)=>{
+          const li = makeEl("li", "", `resume.education.${i}.details`);
+          li.setAttribute("data-i18n-index", j);
+          details.appendChild(li);
+        });
+        div.append(title, meta, details);
         root.appendChild(div);
       });
     }
 
-    function renderLanguages(lang){
+    function buildLanguages(){
       const root = document.getElementById("langList");
-      root.innerHTML = "";
-      resumeData.languages.forEach(l=>{
+      resumeData.languages.forEach((l, i)=>{
         const pill = document.createElement("div");
         pill.className = "pill";
-        pill.innerHTML = `
-          <span>${escapeHtml(l.name[lang])}</span>
-          <span class="lvl">${escapeHtml(l.level[lang])}</span>
-        `;
+        const name = makeEl("span", "", `resume.languages.${i}.name`);
+        const level = makeEl("span", "lvl", `resume.languages.${i}.level`);
+        pill.append(name, level);
         root.appendChild(pill);
       });
     }
 
-    function renderContact(lang){
+    function buildContact(){
       const root = document.getElementById("contactCards");
-      const c = resumeData.contacts;
-      root.innerHTML = "";
       const items = [
-        { label: {fr:"Email", en:"Email"}, val: c.email },
-        { label: {fr:"TÃ©lÃ©phone", en:"Phone"}, val: c.phone },
-        { label: {fr:"Localisation", en:"Location"}, val: c.location[lang] },
-        { label: {fr:"DisponibilitÃ©", en:"Availability"}, val: i18n[lang].hero.availability }
+        { label: "contactCards.email", val: resumeData.contacts.email },
+        { label: "contactCards.phone", val: resumeData.contacts.phone },
+        { label: "contactCards.location", key: "resume.contacts.location" },
+        { label: "contactCards.availability", key: "hero.availability" }
       ];
       items.forEach(it=>{
         const d = document.createElement("div");
         d.className = "info";
-        d.innerHTML = `<div class="infoLabel">${escapeHtml(it.label[lang])}</div><div class="infoVal">${escapeHtml(it.val)}</div>`;
+        const label = makeEl("div", "infoLabel", it.label);
+        const val = makeEl("div", "infoVal", it.key);
+        if (it.val) val.textContent = it.val;
+        d.append(label, val);
         root.appendChild(d);
       });
-
-      // Contact initials
       document.getElementById("contactInitials").textContent = "YB";
     }
 
-    function renderMarquee(lang){
-      // Required: infinite horizontal marquee of company/client names (resume has these orgs).
+    function buildMarquee(){
       const names = [
-        "Vaga Alarme",
-        "Original Gamers",
-        (lang === "fr" ? "FacultÃ© des Sciences de Sfax" : "Faculty of Sciences of Sfax"),
-        (lang === "fr" ? "Institut SupÃ©rieur d'Informatique de Mahdia" : "Higher Institute of Computer Science of Mahdia"),
-        (lang === "fr" ? "LycÃ©e de Korba" : "Korba High School"),
-        (lang === "fr" ? "MongoDB University" : "MongoDB University"),
-        "ANETI"
+        { text: "Vaga Alarme" },
+        { text: "Original Gamers" },
+        { key: "resume.education.0.school" },
+        { key: "resume.education.1.school" },
+        { key: "resume.education.2.school" },
+        { text: "MongoDB University" },
+        { text: "ANETI" }
       ];
       const root = document.getElementById("marqueeTrack");
-      root.innerHTML = "";
-      const loop = [...names, ...names];
-      loop.forEach(n=>{
+      [...names, ...names].forEach(n=>{
         const el = document.createElement("div");
         el.className = "marqueeItem";
-        el.innerHTML = `<span class="marqDot" aria-hidden="true"></span><span>${escapeHtml(n)}</span>`;
+        const dot = document.createElement("span");
+        dot.className = "marqDot";
+        dot.setAttribute("aria-hidden", "true");
+        const text = document.createElement("span");
+        if (n.key) text.setAttribute("data-i18n", n.key);
+        else text.textContent = n.text;
+        el.append(dot, text);
         root.appendChild(el);
       });
     }
@@ -1608,8 +1824,21 @@
 
       document.getElementById("langFR").addEventListener("click", ()=> applyLang("fr"));
       document.getElementById("langEN").addEventListener("click", ()=> applyLang("en"));
+      const menuBtn = document.getElementById("menuBtn");
+      const navLinks = document.getElementById("navLinks");
+      menuBtn.addEventListener("click", ()=>{
+        const open = navLinks.classList.toggle("open");
+        menuBtn.setAttribute("aria-expanded", String(open));
+      });
+      navLinks.querySelectorAll("a").forEach(link=>{
+        link.addEventListener("click", ()=>{
+          navLinks.classList.remove("open");
+          menuBtn.setAttribute("aria-expanded", "false");
+        });
+      });
 
       // Initial render before loader ends
+      buildDynamicSections();
       applyLang(lang);
 
       // loader: 2s then reveal
