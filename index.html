@@ -536,107 +536,56 @@
     }
 
     /* skills */
-    #skillsList{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
+    #skills{padding: 60px 0;}
+    #skills .sectionTitle{margin-bottom: 16px;}
+    .skillsMarqueeCard{
+      overflow:hidden;
+      padding: 14px 0;
+      max-height: 140px;
     }
-    .skillRow{
+    .skillMarqueeRow{
+      height: 42px;
+      overflow:hidden;
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      margin-bottom: 12px;
+      mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
     }
-    .skillName{
-      font-weight:800;
-      color: rgba(255,255,255,.88);
-      min-width:0;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .skillPct{
-      flex:0 0 auto;
-      font-weight:800;
-      color: var(--muted2);
-      font-size: 13px;
-      white-space:nowrap;
-    }
-    .barWrap{
-      height: 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-      position:relative;
-    }
-    .barFill{
-      height: 100%;
-      width: 0%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(91,108,255,.9), rgba(0,229,255,.9), rgba(255,60,172,.9));
-      background-size: 220% 100%;
-      transition: width 1.25s cubic-bezier(.2,.9,.15,1);
-      position:relative;
-    }
-    .barFill::after{
-      content:"";
-      position:absolute;
-      top:0; bottom:0;
-      left:-40%;
-      width: 40%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
-      transform: skewX(-18deg);
-      opacity:0;
-    }
-    .skill.is-filled .barFill{
-      animation: gradientMove 1.2s linear infinite;
-    }
-    .skill.is-filled .barFill::after{
-      opacity:1;
-      animation: sweep 1.4s ease .2s 1;
-    }
-    @keyframes sweep{to{left:110%}}
-
-    .chips{
+    .skillMarqueeRow + .skillMarqueeRow{margin-top: 10px;}
+    .skillMarqueeTrack{
       display:flex;
-      flex-wrap:wrap;
+      align-items:center;
       gap: 10px;
-      margin-top: 18px;
-      max-height: 152px;
-      overflow:hidden;
+      width:max-content;
+      padding: 0 10px;
+      animation: skillsMarquee 30s linear infinite;
+      will-change: transform;
     }
-    .chips.expanded{max-height:none;}
-    .chip{
-      padding: 9px 12px;
-      min-height: 36px;
+    .skillMarqueeRow.reverse .skillMarqueeTrack{animation-direction: reverse;}
+    .skillMarqueeRow:hover .skillMarqueeTrack{animation-play-state: paused;}
+    .marqueeSkillChip{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      gap: 7px;
+      min-height: 34px;
+      padding: 8px 16px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: var(--muted);
-      font-weight: 700;
-      font-size: 13px;
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-      user-select:none;
-    }
-    .chipToggle{
-      display:none;
-      margin-top: 12px;
-      min-height: 44px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
       color: rgba(255,255,255,.9);
-      font-weight: 900;
-      cursor:none;
+      font-family:"DM Sans", system-ui, sans-serif;
+      font-size: .8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      user-select:none;
+      box-shadow: 0 10px 28px rgba(0,0,0,.18);
     }
-    .chipToggle.visible{display:inline-flex; align-items:center; justify-content:center;}
-    .chip:hover{
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.28);
-      border-color: rgba(0,229,255,.25);
+    .marqueeSkillChip.accent-0{background: rgba(91,108,255,.16); border-color: rgba(91,108,255,.28);}
+    .marqueeSkillChip.accent-1{background: rgba(255,60,172,.14); border-color: rgba(255,60,172,.25);}
+    .marqueeSkillChip.accent-2{background: rgba(0,229,255,.12); border-color: rgba(0,229,255,.24);}
+    .marqueeSkillChip.accent-3{background: rgba(255,176,32,.13); border-color: rgba(255,176,32,.24);}
+    @keyframes skillsMarquee{
+      from{transform: translateX(0);}
+      to{transform: translateX(-50%);}
     }
 
     /* experience timeline */
@@ -754,38 +703,6 @@
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.05);
     }
-
-    /* marquee (infinite horizontal) */
-    .marquee{
-      overflow:hidden;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      padding: 10px 0;
-      mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
-    }
-    .marqueeTrack{
-      display:flex;
-      gap: 22px;
-      width:max-content;
-      animation: marquee 16s linear infinite;
-      padding-left: 12px;
-    }
-    @keyframes marquee{to{transform: translateX(-50%)}}
-    .marqueeItem{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      color: var(--muted);
-      font-weight: 900;
-      letter-spacing:.01em;
-      white-space:nowrap;
-    }
-    .marqDot{width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,var(--cyan),var(--pink)); box-shadow:0 0 18px rgba(0,229,255,.14)}
 
     /* contact */
     .contactGrid{display:grid; grid-template-columns: 1fr .9fr; gap: 16px; align-items:stretch;}
@@ -919,13 +836,15 @@
       .portraitWrap{margin: 0 auto; width:min(330px, 86vw);}
       .ctaRow{display:grid; grid-template-columns:1fr;}
       .btn{width:100%; justify-content:center; min-height:44px;}
-      #skillsList{grid-template-columns:1fr;}
       .grid2{grid-template-columns:1fr;}
       .timeline{padding-left: 16px;}
       .job{width:100%; margin-left:0;}
       .job:hover{transform: translateY(-2px);}
       .infoCards, .contactGrid, .eduGrid{grid-template-columns:1fr;}
-      .chip, .pill, .badge, .langBtn{min-height:44px; display:inline-flex; align-items:center;}
+      .pill, .badge, .langBtn{min-height:44px; display:inline-flex; align-items:center;}
+      .skillsMarqueeCard{padding: 12px 0;}
+      .skillMarqueeRow{height: 36px;}
+      .marqueeSkillChip{min-height: 30px; padding: 6px 12px; font-size: .7rem;}
     }
     @media (max-width: 600px){
       .projGrid{grid-template-columns:1fr;}
@@ -1014,16 +933,12 @@
     <section id="skills">
       <div class="container">
         <h2 class="sectionTitle reveal"><span class="dot"></span><span data-i18n="skills.title"></span></h2>
-        <p class="sectionSub reveal" data-i18n="skills.sub"></p>
-
-        <div class="grid2">
-          <div class="card reveal left" id="skillsList"></div>
-          <div class="card reveal right">
-            <div class="marquee" aria-label="Marquee">
-              <div class="marqueeTrack" id="marqueeTrack"></div>
-            </div>
-            <div class="chips" id="techChips" aria-label="Tech chips"></div>
-            <button class="chipToggle" id="chipToggle" type="button" aria-expanded="false"></button>
+        <div class="card reveal skillsMarqueeCard" aria-label="Technical skills">
+          <div class="skillMarqueeRow">
+            <div class="skillMarqueeTrack" id="skillTrackA"></div>
+          </div>
+          <div class="skillMarqueeRow reverse">
+            <div class="skillMarqueeTrack" id="skillTrackB"></div>
           </div>
         </div>
       </div>
@@ -1369,15 +1284,13 @@
 
     const dynamicI18n = {
       fr: {
-        chips: { showMore: "Voir plus", showLess: "Voir moins" },
         contactCards: { email: "Email", phone: "T\u00e9l\u00e9phone", location: "Localisation", availability: "Disponibilit\u00e9" }
       },
       en: {
-        chips: { showMore: "Show more", showLess: "Show less" },
         contactCards: { email: "Email", phone: "Phone", location: "Location", availability: "Availability" }
       }
     };
-    const ANIMATION_CLASSES = ["in", "revealed", "animated", "visible", "in-view", "is-filled"];
+    const ANIMATION_CLASSES = ["in", "revealed", "animated", "visible", "in-view"];
     let currentLang = DEFAULT_LANG;
     let dynamicSectionsBuilt = false;
 
@@ -1426,7 +1339,6 @@
 
       applyTextTranslations(lang);
       updateStats(lang);
-      updateChipToggleText();
       restoreAnimationState(animationState);
 
       localStorage.setItem(LS_KEY, lang);
@@ -1471,63 +1383,43 @@
       buildEducation();
       buildLanguages();
       buildContact();
-      buildMarquee();
       dynamicSectionsBuilt = true;
     }
 
     function buildSkills(){
-      const root = document.getElementById("skillsList");
-      resumeData.skills.forEach(s=>{
-        const row = document.createElement("div");
-        row.className = "skill";
-
-        const skillRow = document.createElement("div");
-        skillRow.className = "skillRow";
-        const name = document.createElement("div");
-        name.className = "skillName";
-        name.textContent = s.key;
-        const pct = document.createElement("div");
-        pct.className = "skillPct";
-        pct.textContent = s.pct + "%";
-        skillRow.append(name, pct);
-
-        const barWrap = document.createElement("div");
-        barWrap.className = "barWrap";
-        barWrap.setAttribute("aria-label", s.key);
-        const barFill = document.createElement("div");
-        barFill.className = "barFill";
-        barFill.setAttribute("data-pct", s.pct);
-        barWrap.appendChild(barFill);
-
-        row.append(skillRow, barWrap);
-        root.appendChild(row);
-      });
-
-      const chips = document.getElementById("techChips");
-      const technologies = [...new Set(resumeData.technologies)];
-      technologies.forEach(t=>{
-        const c = document.createElement("span");
-        c.className = "chip";
-        c.textContent = t;
-        chips.appendChild(c);
-      });
-      const toggle = document.getElementById("chipToggle");
-      if (technologies.length > 16) {
-        toggle.classList.add("visible");
-        toggle.addEventListener("click", ()=>{
-          const expanded = chips.classList.toggle("expanded");
-          toggle.setAttribute("aria-expanded", String(expanded));
-          updateChipToggleText();
-        });
-      }
+      const allSkills = [...new Set([
+        ...resumeData.skills.map(s=>s.key),
+        ...resumeData.technologies
+      ])];
+      const midpoint = Math.ceil(allSkills.length / 2);
+      appendSkillTrack(document.getElementById("skillTrackA"), allSkills.slice(0, midpoint));
+      appendSkillTrack(document.getElementById("skillTrackB"), allSkills.slice(midpoint));
     }
 
-    function updateChipToggleText(){
-      const chips = document.getElementById("techChips");
-      const toggle = document.getElementById("chipToggle");
-      if (!chips || !toggle) return;
-      const key = chips.classList.contains("expanded") ? "chips.showLess" : "chips.showMore";
-      toggle.textContent = resolveI18nValue(key, currentLang) || "";
+    function emojiForSkill(name){
+      const s = name.toLowerCase();
+      if (s.includes("python")) return "\u{1F40D}";
+      if (s.includes("react")) return "\u269B\uFE0F";
+      if (s.includes("node")) return "\u{1F7E2}";
+      if (s.includes("mongo") || s.includes("mysql") || s.includes("data")) return "\u{1F5C4}\uFE0F";
+      if (s.includes("machine") || s.includes("deep") || s.includes("vision") || s.includes("intelligence")) return "\u{1F9E0}";
+      if (s.includes("git")) return "\u{1F527}";
+      if (s.includes("design") || s.includes("photoshop") || s.includes("illustrator")) return "\u{1F3A8}";
+      if (s.includes("premiere") || s.includes("after") || s.includes("youtube") || s.includes("tiktok")) return "\u{1F3AC}";
+      if (s.includes("api") || s.includes("jwt")) return "\u{1F510}";
+      if (s.includes("html") || s.includes("css") || s.includes("javascript")) return "\u{1F4BB}";
+      return "\u2728";
+    }
+
+    function appendSkillTrack(track, skills){
+      if (!track) return;
+      const loop = [...skills, ...skills];
+      loop.forEach((skill, i)=>{
+        const chip = document.createElement("span");
+        chip.className = "marqueeSkillChip accent-" + (i % 4);
+        chip.textContent = emojiForSkill(skill) + " " + skill;
+        track.appendChild(chip);
+      });
     }
 
     function buildExperience(){
@@ -1660,31 +1552,6 @@
       document.getElementById("contactInitials").textContent = "YB";
     }
 
-    function buildMarquee(){
-      const names = [
-        { text: "Vaga Alarme" },
-        { text: "Original Gamers" },
-        { key: "resume.education.0.school" },
-        { key: "resume.education.1.school" },
-        { key: "resume.education.2.school" },
-        { text: "MongoDB University" },
-        { text: "ANETI" }
-      ];
-      const root = document.getElementById("marqueeTrack");
-      [...names, ...names].forEach(n=>{
-        const el = document.createElement("div");
-        el.className = "marqueeItem";
-        const dot = document.createElement("span");
-        dot.className = "marqDot";
-        dot.setAttribute("aria-hidden", "true");
-        const text = document.createElement("span");
-        if (n.key) text.setAttribute("data-i18n", n.key);
-        else text.textContent = n.text;
-        el.append(dot, text);
-        root.appendChild(el);
-      });
-    }
-
     // IntersectionObserver: reveal + skill bars on view
     function setupObservers(){
       const revealObs = new IntersectionObserver((entries)=>{
@@ -1698,21 +1565,6 @@
 
       document.querySelectorAll(".reveal").forEach(el=>revealObs.observe(el));
 
-      const skillObs = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if (!e.isIntersecting) return;
-          const skill = e.target;
-          const fill = skill.querySelector(".barFill");
-          if (fill && !skill.classList.contains("is-filled")){
-            const pct = Number(fill.getAttribute("data-pct") || "0");
-            fill.style.width = Math.max(0, Math.min(100, pct)) + "%";
-            skill.classList.add("is-filled");
-          }
-          skillObs.unobserve(skill);
-        });
-      }, { threshold: .35 });
-
-      document.querySelectorAll("#skillsList .skill").forEach(el=>skillObs.observe(el));
     }
 
     // Particle network canvas
